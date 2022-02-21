@@ -170,7 +170,7 @@ int main(int argc, char* argv[]){
 	               	 	analysisGeneral.fill(dvcsEvent, 1.);
 	               	 	analysisGeneralRC.fill(dvcsEvent, 1.);
 	               	 	analysisALU.fill(dvcsEvent, 1.);
-						analysisTSlope.fill(dvcsEvent, 1.);
+				analysisTSlope.fill(dvcsEvent, 1.);
 					}
 
 					//close file
