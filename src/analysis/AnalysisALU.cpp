@@ -62,29 +62,20 @@ void AnalysisALU::plot(const std::string& path){
 	//loop
 	for(std::vector<std::pair<double, double> >::const_iterator itT = m_binRangesT.begin(); 
 		itT != m_binRangesT.end(); itT++){
-
-		//labes
-		std::stringstream ss;
-
-		ss << itT->first << " #leq |t| < " << itT->second;
-
-		//loop over canvases for this t bin
-		for(size_t i = 0; i < 2; i++){
-
-			//new
-			cans[i].push_back(
-				new TCanvas(
-					(HashManager::getInstance()->getHash()).c_str(), ss.str().c_str())
-			);
-
-			//divide
-			cans[i].back()->Divide(m_binRangesXB.size(), m_binRangesQ2.size());
-
-			//plot
-			for(std::vector<std::pair<double, double> >::const_iterator itXB = m_binRangesXB.begin(); 
+		for(std::vector<std::pair<double, double> >::const_iterator itXB = m_binRangesXB.begin(); 
 				itXB != m_binRangesXB.end(); itXB++){
 				for(std::vector<std::pair<double, double> >::const_iterator itQ2 = m_binRangesQ2.begin(); 
 					itQ2 != m_binRangesQ2.end(); itQ2++){
+
+					for(size_t i = 0; i < 2; i++){
+
+					//labes
+					std::stringstream ss;
+
+					//ss << itT->first << " #leq |t| < " << itT->second;
+
+
+
 				
 					//iterator
 					std::vector<BinALU>::const_iterator itBin;
@@ -111,11 +102,18 @@ void AnalysisALU::plot(const std::string& path){
 					//check if not empty
 					if(itBin->getNEvents() == 0) continue;
 
-					//set pad
-					cans[i].back()->cd(1 + 
-						size_t(itXB - m_binRangesXB.begin()) + 
-						(size_t(m_binRangesQ2.end() - itQ2) - 1) * m_binRangesXB.size() 
+					//new
+					cans[i].push_back(
+							new TCanvas(
+								(HashManager::getInstance()->getHash()).c_str(), ss.str().c_str())
 					);
+
+					//divide
+					cans[i].back()->Divide(1, 1);
+
+
+					//set pad
+					cans[i].back()->cd(1);
 
 					if(i == 0){
 
@@ -170,6 +168,7 @@ void AnalysisALU::plot(const std::string& path){
 			}
 		}
 	}
+
 
 	//print
 	for(size_t j = 0; j < cans[0].size(); j++){
