@@ -1,4 +1,4 @@
-r#include "../../include/event/DVCSEvent.h"
+#include "../../include/event/DVCSEvent.h"
 
 #include <HepMC3/GenParticle.h>
 #include <HepMC3/GenVertex.h>
