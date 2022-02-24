@@ -1,4 +1,5 @@
 #include "../../include/analysis/AnalysisTSlope.h"
+#include "../../include/other/SubProcessType.h"
 
 #include <cmath>
 #include <sstream>
@@ -21,7 +22,7 @@ AnalysisTSlope::~AnalysisTSlope(){
 
 void AnalysisTSlope::fill(DVCSEvent& event, double weight){
 
-	if(event.checkSubProcessType(SubProcessType::DVCS) == 1) {
+	if(event.checkSubProcessType(SubProcessType::DVCS) == 0 && event.checkSubProcessType(SubProcessType::BH) == 1) {
 
 		weight *= -1.;
  	
@@ -113,24 +114,26 @@ void AnalysisTSlope::plot(const std::string& path){
 				cans[i].back()->cd(1);
 
 				//set log-scale
-				//cans[i].back()->cd(1)->SetLogy();
+				cans[i].back()->cd(1)->SetLogy();
 
 				if(i == 0){
 
 					//histograms
-					TH1* h = itBin->getHDistributions();
+					//TH1* h = itBin->getHDistributions();
 
 					//set minima
-					h->SetMinimum(1);
+					//h->SetMinimum(1);
 
 					//colors
-					h->SetLineColor(2);
+					//h->SetLineColor(2);
 
 					//no stats
-					h->SetStats(0);
+					//h->SetStats(0);
 
 					//draw
-					h->Draw();
+					//h->Draw();
+
+					continue;
 
 				}
 
