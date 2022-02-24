@@ -89,6 +89,12 @@ FitResult BinTSlope::analyse(){
 		return FitResult();
 	}
 
+	//skip bins with low summed weights
+	if(m_sumWeights < 100){
+		return FitResult();
+	}
+
+
 	//make t-slope histogram
 	m_hTSlope = m_hDistributions;
 
