@@ -67,6 +67,9 @@ int main(int argc, char* argv[]){
 	double integratedLumiWithDVCS = 0.;
 	double integratedLumiWithoutDVCS = 0.;
 
+	double totalEventsWithDVCS = 0.;
+	double totalEventsWithoutDVCS = 0.;
+
 	//loop (read each files two times)
 	for(size_t loop = 0; loop < 2; loop++){
 
@@ -176,9 +179,11 @@ int main(int argc, char* argv[]){
 
 						//luminosity
 						if(subProcessTypeMask.back() & SubProcessType::DVCS){
-							integratedLumiWithDVCS += nEvents.back() / crossSection.back().first;
+							totalEventsWithDVCS += nEvents.back();
+							//integratedLumiWithDVCS += nEvents.back() / crossSection.back().first;
 						}else{
-							integratedLumiWithoutDVCS += nEvents.back() / crossSection.back().first;
+							totalEventsWithoutDVCS += nEvents.back();
+							//integratedLumiWithoutDVCS += nEvents.back() / crossSection.back().first;
 						}
 
 
@@ -201,9 +206,11 @@ int main(int argc, char* argv[]){
 	    				double thisWeight;
 
 	    				if(subProcessTypeMask.at(iFile) & SubProcessType::DVCS){
-	    					thisWeight = targetIntegratedLuminosityNb / integratedLumiWithDVCS;
+	    					//thisWeight = targetIntegratedLuminosityNb / integratedLumiWithDVCS;
+						thisWeight = targetIntegratedLuminosityNb * crossSection.back().first / totalEventsWithDVCS;
 						}else{
-							thisWeight = targetIntegratedLuminosityNb / integratedLumiWithoutDVCS;
+							//thisWeight = targetIntegratedLuminosityNb / integratedLumiWithoutDVCS;
+							thisWeight = targetIntegratedLuminosityNb * crossSection.back().first / totalEventsWithoutDVCS;
 						}
 
 						//loop over events
