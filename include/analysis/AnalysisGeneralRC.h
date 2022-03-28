@@ -38,6 +38,9 @@ private:
 	TH1* m_hYRC;
 	TH1* m_hYRatio[2];
 
+	TH1* m_hERC[2];
+	TH1* m_hEtaRC[2];
+
 	//2D histograms
 	TH2* m_hXBvsXB;
 	TH2* m_hQ2vsQ2;

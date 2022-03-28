@@ -18,6 +18,12 @@ AnalysisGeneralRC::AnalysisGeneralRC() : Analysis("AnalysisGeneralRC"){
 	m_hYRCBorn = new TH1D((HashManager::getInstance()->getHash()).c_str(), "y", nbin, -0.1, 1.1);
 	m_hYRC = new TH1D((HashManager::getInstance()->getHash()).c_str(), "y", nbin, -0.1, 1.1);
 
+	m_hERC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (ISR)", nbin, 0., 10.);
+	m_hERC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (FSR)", nbin, 0., 10.);
+
+	m_hEtaRC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (ISR)", nbin, -5., 5.);
+	m_hEtaRC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (FSR)", nbin, -5., 5.);
+
 	//set 2D histograms
 	m_hXBvsXB = new TH2D((HashManager::getInstance()->getHash()).c_str(), 
 		"xB_{Born} vs. (xB_{Born}-xB_{RC})/xB_{Born}", nbin, -4., 0., nbin, -8., 0.1);
@@ -93,6 +99,8 @@ void AnalysisGeneralRC::fill(DVCSEvent& event, double weight){
 		m_hYRC->Fill(Yrc, weight);
 		m_hYRCBorn->Fill(Yb, weight);
 
+		if(event.checkRCType(RCType::ISR)) m_hERC[0]->Fill(event.getEGammaRC(RCType::ISR), weight);
+
 		//fill 2D histograms
 		m_hXBvsXB->Fill(XBb, (XBb-XBrc)/XBb, weight);
 		m_hQ2vsQ2->Fill(Q2b, (Q2b-Q2rc)/Q2b, weight);
@@ -135,7 +143,7 @@ void AnalysisGeneralRC::plot(const std::string& path){
 	std::vector<TCanvas*> cans;
 
 	//loop over canvases
-	for(size_t i = 0; i < 3; i++)	{
+	for(size_t i = 0; i < 4; i++)	{
 
 		//add canvas
 		cans.push_back(
@@ -231,6 +239,11 @@ void AnalysisGeneralRC::plot(const std::string& path){
 			m_hYRatio[1]->SetStats(0);
 			m_hYRatio[1]->SetTitle("y_{RC}/y_{RC, Born}");
 			m_hYRatio[1]->Draw();
+		}
+		if(i == 3){
+
+			cans.back()->cd(1);
+			m_hERC[0]->Draw();
 		}
 	}
 
