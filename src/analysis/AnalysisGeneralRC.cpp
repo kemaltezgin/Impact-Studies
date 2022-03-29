@@ -20,8 +20,7 @@ AnalysisGeneralRC::AnalysisGeneralRC() : Analysis("AnalysisGeneralRC"){
 
 	m_hERC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (ISR)", nbin, 0., 10.);
 	m_hERC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (FSR)", nbin, 0., 10.);
-
-	m_hEtaRC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (ISR)", nbin, -5., 5.);
+	m_hEtaRC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (ISR)", nbin, -20., 20.);
 	m_hEtaRC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (FSR)", nbin, -5., 5.);
 
 	//set 2D histograms
@@ -38,7 +37,7 @@ AnalysisGeneralRC::AnalysisGeneralRC() : Analysis("AnalysisGeneralRC"){
 	m_hYvsY = new TH2D((HashManager::getInstance()->getHash()).c_str(), 
 		"y_{Born} vs. (y_{Born}-y_{RC})/y_{Born}", nbin, -0.1, 1.1, nbin, -15., 0.1);
 
-	size_t maxNEvents = 1E4;
+	size_t maxNEvents = 1E1;
 
 	m_analyserXB = new MeanSigmaAnalyser(m_hXBvsXB, maxNEvents);
 	m_analyserQ2 = new MeanSigmaAnalyser(m_hQ2vsQ2, maxNEvents);
@@ -95,11 +94,23 @@ void AnalysisGeneralRC::fill(DVCSEvent& event, double weight){
 		double PhiSrc = event.getPhiS(KinematicsType::Observed);
 		double Yrc = event.getY(KinematicsType::Observed);
 
+		double EgISR = event.getEGammaRC(RCType::ISR);
+		double EgFSR = event.getEGammaRC(RCType::FSR);
+		double EtagISR = event.getEtaGammaRC(RCType::ISR);
+		double EtagFSR = event.getEtaGammaRC(RCType::FSR);
+
 		//fill 1D histograms
 		m_hYRC->Fill(Yrc, weight);
 		m_hYRCBorn->Fill(Yb, weight);
 
-		if(event.checkRCType(RCType::ISR)) m_hERC[0]->Fill(event.getEGammaRC(RCType::ISR), weight);
+		if(event.checkRCType(RCType::ISR)) {
+			m_hERC[0]->Fill(EgISR, weight);
+			m_hEtaRC[0]->Fill(EtagISR, weight);
+		}
+		if(event.checkRCType(RCType::FSR)) {
+			m_hERC[1]->Fill(EgFSR, weight);
+			m_hEtaRC[1]->Fill(EtagFSR, weight);
+		}
 
 		//fill 2D histograms
 		m_hXBvsXB->Fill(XBb, (XBb-XBrc)/XBb, weight);
@@ -243,7 +254,18 @@ void AnalysisGeneralRC::plot(const std::string& path){
 		if(i == 3){
 
 			cans.back()->cd(1);
+			cans.back()->cd(1)->SetLogy();
 			m_hERC[0]->Draw();
+			
+			cans.back()->cd(2);
+			cans.back()->cd(2)->SetLogy();
+			m_hERC[1]->Draw();
+
+			cans.back()->cd(4);
+			m_hEtaRC[0]->Draw();
+
+			cans.back()->cd(5);
+			m_hEtaRC[1]->Draw();
 		}
 	}
 
