@@ -20,8 +20,8 @@ AnalysisGeneralRC::AnalysisGeneralRC() : Analysis("AnalysisGeneralRC"){
 
 	m_hERC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (ISR)", nbin, 0., 10.);
 	m_hERC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (FSR)", nbin, 0., 10.);
-	m_hERC[2] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (ISR) zoom (10^{-6},1.) GeV", nbin, -6., 0.);
-	m_hERC[3] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (FSR) zoom (10^{-6},1.) GeV", nbin, -6., 0.);
+	m_hERC[2] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (ISR) zoom (10^{-6},10.) GeV", nbin, -6., 1.);
+	m_hERC[3] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "E (FSR) zoom (10^{-6},10.) GeV", nbin, -6., 1.);
 	m_hEtaRC[0] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (ISR)", nbin, -20., 20.);
 	m_hEtaRC[1] = new TH1D((HashManager::getInstance()->getHash()).c_str(), "#eta (FSR)", nbin, -5., 5.);
 
