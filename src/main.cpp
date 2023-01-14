@@ -158,7 +158,7 @@ int main(int argc, char* argv[]){
 	          				}else{
 	          					thisIsRCSample = true;
 	          				}
-	          			}
+					}
 
 	                	//if reading failed - exit loop
 	                	if(inputFile.failed() ) break;
@@ -234,6 +234,7 @@ int main(int argc, char* argv[]){
 	               
 	               		//read
 	          			inputFile.read_event(evt);
+
 	          			inputFileRec.read_event(evtRec);
 
 	                	//if reading failed - exit loop

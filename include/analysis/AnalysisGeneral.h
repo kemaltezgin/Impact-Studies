@@ -3,6 +3,8 @@
 
 #include <TH2.h>
 #include <TH1.h>
+#include <TPad.h>
+#include <TLine.h>
 #include <TLegend.h>
 
 #include "../include/analysis/Analysis.h"
@@ -31,6 +33,13 @@ public:
 	virtual void plot(const std::string& path);
 
 private:
+
+	//reconstruction probabilities
+	double m_resProbPOut[2];
+	double m_resProbEOut[2];
+	double m_resProbGOut[2];
+
+	double m_resProbExcl[2];
 
 	//2D histograms
 	TH2* m_hXBvsQ2;
@@ -63,7 +72,14 @@ private:
 	TH1* m_hGPtOut[2];
 	TH1* m_hGThOut[2];
 	TH1* m_hGPhOut[2];
+	
+	TH1* m_hRatio[21];
 		
-	TLegend* leg[3];
+	TLegend* leg[7];
+
+	TPad* padHisto[21];
+	TPad* padPull[21];
+	TLine* L[21];
+
 };
 #endif

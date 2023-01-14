@@ -138,6 +138,7 @@ int main(int argc, char* argv[]){
 		               
 		               		//read
 		          			inputFile.read_event(evt);
+						if (evt<5000){
 
 		          			//if the number of particles is not fixed, we have RC sample
 		          			if(evt.particles().size() != 0 && evt.particles().size() != lastParticleSize){
@@ -147,7 +148,7 @@ int main(int argc, char* argv[]){
 		          				}else{
 		          					thisIsRCSample = true;
 		          				}
-		          			}
+		          			}}
 
 		                	//if reading failed - exit loop
 		                	if(inputFile.failed() ) break;
