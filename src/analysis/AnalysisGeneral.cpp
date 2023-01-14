@@ -229,6 +229,7 @@ void AnalysisGeneral::plot(const std::string& path){
 	L[18] = new TLine(0,1,10,1);
 	L[19] = new TLine(-4,1,2,1);
 	L[20] = new TLine(-10,1,4,1);
+	
 	//loop over canvases
 	for(size_t i = 0; i < 6; i++){
 
@@ -339,6 +340,16 @@ void AnalysisGeneral::plot(const std::string& path){
 				padHisto[2]->cd();
 				cans.back()->cd(3);
 				cans.back()->cd(3)->SetLogy();
+				m_hQ2[j]->SetLineColor(color);
+				m_hQ2[j]->GetXaxis()->SetTitle("log(Q^{2} [(GeV/c)^{2}])");
+				m_hQ2[j]->Draw(options.c_str());
+				
+				cans.back()->cd(4);
+				m_hRatio[16]->GetXaxis()->SetTitle("log(Q^{2} [(GeV/c)^{2}])");
+				m_hRatio[16]->Draw();
+
+				cans.back()->cd(5);
+				cans.back()->cd(5)->SetLogy();
 				m_hT[j]->SetLineColor(color);
 				m_hT[j]->SetTitle("|t| [(GeV/c)^{2}]");
 				m_hT[j]->Draw(options.c_str());
@@ -382,6 +393,7 @@ void AnalysisGeneral::plot(const std::string& path){
 				m_hPhiS[j]->SetLineColor(color);
 				m_hPhiS[j]->SetTitle("#varphi_{S} [rad]");
 				m_hPhiS[j]->SetMinimum(0.);
+				m_hPhiS[j]->GetXaxis()->SetTitle("#phi_{S} [rad]");
 				m_hPhiS[j]->Draw(options.c_str());
 				
 				cans.back()->cd(12);

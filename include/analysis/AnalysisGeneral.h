@@ -74,7 +74,7 @@ private:
 	TH1* m_hGPhOut[2];
 	
 	TH1* m_hRatio[21];
-		
+
 	TLegend* leg[7];
 
 	TPad* padHisto[21];
